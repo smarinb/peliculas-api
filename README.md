@@ -1,41 +1,74 @@
-# 📽️ API REST de Películas
+# 🎬 API de Gestión de Películas
 
-Este proyecto es una API REST básica construida con **Spring Boot**, que permite gestionar un catálogo de películas y directores. Ha sido desarrollado con enfoque en buenas prácticas y tests automatizados, como parte del aprendizaje backend en Java.
+Proyecto backend desarrollado con **Spring Boot** que permite gestionar un catálogo de películas y sus directores.
 
-## 🚀 Funcionalidades
+## 📌 Funcionalidades
 
-### Películas 🎬
-- Listar todas las películas (`GET /peliculas`)
-- Añadir una nueva película (`POST /peliculas`)
-- Obtener una película por ID (`GET /peliculas/{id}`)
-- Buscar películas por ID de director (`GET /peliculas/director/{id}`)
+- Listar todas las películas
+- Buscar una película por su ID
+- Buscar películas por ID de director
+- Añadir una nueva película con validaciones
+- Añadir un nuevo director
+- Listar todos los directores
 
-### Directores 🎥
-- Listar todos los directores (`GET /directores`)
-- Añadir un nuevo director (`POST /directores`)
+## 🔗 Relaciones
 
-## ✅ Validaciones incluidas
-- No se puede crear una película sin título, duración, año o director.
-- El año debe estar entre 1900 y 2025.
-- La duración debe ser entre 15 y 180 minutos.
+- Cada **película** está asociada a un único **director** (`@ManyToOne`)
+- Cada **director** puede tener varias **películas** (`@OneToMany`)
 
-## 🧪 Tests automatizados
-Se incluyen pruebas con **MockMvc** que validan:
-- Respuestas correctas (códigos 200, 201 y 400)
-- Comportamiento esperado en los endpoints
-- Inserción y recuperación de películas
+## ✅ Validaciones
 
-Además, se utiliza una configuración de test con un `@TestConfiguration` que inyecta automáticamente un director para todos los tests.
+Las entidades cuentan con validaciones como:
+
+- El título no puede estar en blanco
+- El año debe estar entre 1900 y 2025
+- La duración debe ser entre 15 y 180 minutos
+- El director no puede ser nulo
+
+## 🧪 Tests
+
+Se han implementado pruebas con `MockMvc` para verificar:
+
+- ✔️ Respuesta 200 al listar películas
+- ✔️ Código 201 al añadir película válida
+- ✔️ Código 400 al añadir película inválida
+- ✔️ Buscar una película por ID existente
+- ✔️ Buscar películas por ID de director
+
+Incluye un `@TestConfiguration` que inserta un director por defecto para facilitar los tests.
 
 ## 🛠️ Tecnologías usadas
+
 - Java 17
-- Spring Boot 3.4
+- Spring Boot 3
+- Spring Web
+- Spring Data JPA
+- H2 (base de datos en memoria)
+- Bean Validation
+- JUnit 5 + MockMvc
 - Maven
-- H2 (base de datos en memoria para desarrollo y tests)
-- JPA (Hibernate)
-- Validación con Jakarta Validation (JSR-380)
-- JUnit 5
-- MockMvc para tests de integración
+
+## 🗃️ Estructura
+
+```
+├── model
+│   ├── Pelicula.java
+│   └── Director.java
+├── controller
+│   ├── PeliculaController.java
+│   └── DirectorController.java
+├── repository
+│   ├── PeliculaRepository.java
+│   └── DirectorRepository.java
+├── service
+│   ├── PeliculaService.java
+│   └── DirectorService.java
+├── config
+│   └── TestDataConfig.java
+└── PeliculaControllerTests.java
+```
+
+---
 
 ## ▶️ Cómo ejecutar el proyecto
 ```bash
